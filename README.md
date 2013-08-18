@@ -3,6 +3,9 @@ Hackerhane
 
 Hackerspace üyeleri için uygulama. 
 
+
+Planlanan özellikler:
+
 - Üye listesi
 - Üye profilleri
 - Aidat ödeme bilgileri
