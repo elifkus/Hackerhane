@@ -11,6 +11,7 @@ Hackerspace üyeleri için uygulama.
 
 
 Gereklilikler
-================
+=====================
 Python 3.x
+
 Django 1.6
