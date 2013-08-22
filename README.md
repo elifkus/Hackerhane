@@ -11,6 +11,7 @@ Planlanan özellikler:
 - Aidat ödeme bilgileri
 - Single sign on
 - Social sign in
+- Bütçe - giderler
 
 
 Gereklilikler
