@@ -99,3 +99,8 @@ class WebLink(models.Model):
     type = models.CharField(max_length=16, choices=WEB_SITES)
     link = models.URLField()
     
+
+    
+    
+
+    
