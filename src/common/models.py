@@ -2,7 +2,8 @@ from django.db import models
 from hackerhane import settings
 
 PAYMENT_MEDIA = (
-         ("ELDEN", "Elden veya kutuya bıraktım"),
+         ("ELDEN", "Elden verdim"),
+         ("KUTU", "Kutuya bıraktım"),
          ("BANKADAN-EFT", "EFT ile gönderdim"),
          ("BANKADAN-KREDI KARTI", "Kredi kartı ile gönderdim"),
      )
