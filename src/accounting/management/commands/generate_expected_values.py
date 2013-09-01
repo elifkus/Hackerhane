@@ -30,7 +30,7 @@ class Command(LabelCommand):
             month_str = Payment.MONTHS[month_int-1][1]
             note = month_str + " ayı aidatı - " + " ".join(membership.users) 
             today = datetime.today()
-            expected_date = date(today.year, today.month, 5)
+            expected_date = date(today.year, month_int, 5)
         
             expected_income = ExpectedIncome(amount=amount, note=note, type=1,  
                                         expected_date=expected_date, membership=membership)
@@ -42,7 +42,7 @@ class Command(LabelCommand):
         for recurring_expense in recurring_expenses:
             
             today = datetime.today()
-            expected_date = date(today.year, today.month, 10)
+            expected_date = date(today.year, month_int, recurring_expense.day_of_occurrence)
         
             expected_expense = ExpectedExpense(amount=recurring_expense.amount, type=recurring_expense.type,
                                                 expected_date=expected_date)

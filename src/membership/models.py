@@ -3,7 +3,6 @@ from hackerhane import settings
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
-from accounting.models import EndOfDayBalance
 from accounting.models import Transaction
 from common.models import PAYMENT_MEDIA
     

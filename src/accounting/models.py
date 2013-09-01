@@ -1,19 +1,18 @@
 from django.db import models
-from hackerhane import settings
 from datetime import timedelta
 from common.models import PAYMENT_MEDIA
-
+from common.models import BaseModelWithTimestamps
 
 class TransactionType(models.Model):
     name = models.CharField(max_length=64)
 
-class Transaction(models.Model):
+    def __str__(self):
+        return self.name
+    
+    
+class Transaction(BaseModelWithTimestamps):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     realized_date = models.DateField()
-    created_time = models.DateField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='+')
-    updated_time = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='+')
     note = models.CharField(max_length=256)
     type = models.ForeignKey(TransactionType)
     payment_media = models.CharField(max_length=32, choices=PAYMENT_MEDIA)
@@ -57,5 +56,9 @@ class MonthlyRecurringExpense(models.Model):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     type = models.ForeignKey(TransactionType)
     day_of_occurrence = models.IntegerField()
+    
+    def amount_with_currency(self):
+        #TODO: Fix how it is shown
+        return "%d TL" % self.amount
     
     
