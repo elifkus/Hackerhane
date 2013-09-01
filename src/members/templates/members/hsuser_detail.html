@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ object.full_name }}</h1>
+{% if object.email_visible %} <p>{{ object.email }} </p>{% endif %}
+{% if object.summary %} <p>Hakkımda: {{ object.summary }}</p>{% endif %}
+{% if object.reason %}<p>Neden Hackerspace?: {{ object.reason }}</p>{% endif %}
+{% endblock content %}
