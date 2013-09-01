@@ -12,6 +12,9 @@ Planlanan özellikler:
 - Single sign on
 - Social sign in
 - Bütçe - giderler
+- Anasayfa - etkinlik takvimi, mekanın açık olup olmadığı, eğitimler, aktif projeler
+- Projeler
+- Eğitimler (?)
 
 
 Gereklilikler
