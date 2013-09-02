@@ -19,7 +19,7 @@ class Membership(models.Model):
     custom_amount = models.DecimalField(max_digits=12, decimal_places=2)
 
 
-class Payment(models.Model):
+class FeePayment(models.Model):
     MONTHS = (
         (1, 'Ocak'),
         (2, 'Şubat'),
@@ -49,19 +49,19 @@ class Payment(models.Model):
     __approved = None
     
     def __init__(self, *args, **kwargs):
-        super(Payment, self).__init__(*args, **kwargs)
+        super(FeePayment, self).__init__(*args, **kwargs)
         self.__approved = self.approved
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.approved and self.approved != self.__approved:
             raise ValidationError("An approved payment cannot be changed")
 
-        super(Payment, self).save(force_insert, force_update, *args, **kwargs)
+        super(FeePayment, self).save(force_insert, force_update, *args, **kwargs)
         self.__approved = self.approved
 
 
 #generate transaction when payment is approved
-@receiver(post_save, sender=Payment)
+@receiver(post_save, sender=FeePayment)
 def insert_transaction_for_payment(sender, instance, **kwargs):
     if instance.approved:
         note =  instance.get_month_display() + " ayı aidatı - " + " ".join(instance.for_membership.users) 
