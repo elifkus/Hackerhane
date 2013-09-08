@@ -168,6 +168,6 @@ SOCIALACCOUNT_PROVIDERS = \
     
 
 try:
-    from local_settings import *
+    from hackerhane.local_settings import *
 except ImportError:
     pass
