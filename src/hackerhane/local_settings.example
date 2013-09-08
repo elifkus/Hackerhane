@@ -3,7 +3,7 @@ SECRET_KEY = 'x84545$uj$5ymghq74454545454'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-
+#ALLOWED_HOSTS = ['example.com',]
 #TEMPLATE_DEBUG = True
 
 DATABASES = {
