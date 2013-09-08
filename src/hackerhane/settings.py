@@ -16,9 +16,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$uj$jl55ymghqw&0dndpefn@n!a2t#c&+x7*7tz87n3ri%c-nk'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,16 +37,17 @@ INSTALLED_APPS = (
     'accounting',
     'members',
     'membership',
+    'bootstrapform',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.github',
+    #'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.linkedin',
-    'allauth.socialaccount.providers.openid',
-    'allauth.socialaccount.providers.stackexchange',
-    'allauth.socialaccount.providers.twitter',
+    #'allauth.socialaccount.providers.linkedin',
+    #'allauth.socialaccount.providers.openid',
+    #'allauth.socialaccount.providers.stackexchange',
+    #'allauth.socialaccount.providers.twitter',
     'django.contrib.sites', #added for allauth
 )
 
@@ -75,13 +73,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-    'default-unused': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'hackerhane',                      # Or path to database file if using sqlite3.
-        'HOST': 'localhost',
-        'USER': 'postgres',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-    }
 }
 
 # Internationalization
@@ -161,3 +152,22 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = False
 #Dictionary containing provider specific settings.
 
 SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = \
+    { 'facebook':
+        { 'SCOPE': ['email',],
+          'AUTH_PARAMS': { 'auth_type': 'reauthenticate' },
+          'METHOD': 'oauth2' ,
+          'LOCALE_FUNC': lambda request: 'tr_TR'},
+      'google':
+        { 'SCOPE': ['https://www.googleapis.com/auth/userinfo.profile', 
+                    'https://www.googleapis.com/auth/userinfo.email'],
+          'AUTH_PARAMS': { 'access_type': 'online' } }
+    }
+    
+    
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
