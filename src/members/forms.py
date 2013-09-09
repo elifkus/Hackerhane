@@ -5,7 +5,7 @@ Created on Sep 9, 2013
 '''
 from django import forms
 
-class SignUpForm(forms.Form):
+class SignupForm(forms.Form):
     full_name = forms.CharField(max_length=64)
     email = forms.CharField(max_length=255)
     cell_phone_number = forms.CharField(max_length=16)
