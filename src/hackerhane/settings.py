@@ -127,7 +127,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Ist Hs] "
 
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGOUT_REDIRECT_URL ="/"
-#ACCOUNT_SIGNUP_FORM_CLASS (=None)
+ACCOUNT_SIGNUP_FORM_CLASS = 'members.forms.SignupForm'
 #A string pointing to a custom form class (e.g. 'myapp.forms.SignupForm') that is used during signup to ask the user for additional input (e.g. newsletter signup, birth date). This class should implement a 'save' method, accepting the newly signed up user as its only parameter.
 ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -148,8 +148,6 @@ SOCIALACCOUNT_AUTO_SIGNUP = False
 #Enable support for django-avatar. When enabled, the profile image of the user is copied locally into django-avatar at signup.
 SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
-#SOCIALACCOUNT_PROVIDERS (= dict)
-#Dictionary containing provider specific settings.
 
 SITE_ID = 1
 

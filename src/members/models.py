@@ -57,11 +57,11 @@ class HsUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     summary = models.TextField(blank=True, null=True)
     reason = models.TextField(blank=True, null=True)
- 
+    
     objects = HsUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['cell_phone_number', 'is_student']
+    REQUIRED_FIELDS = ['cell_phone_number', 'is_student', 'full_name']
 
     def get_full_name(self):
         return self.full_name
