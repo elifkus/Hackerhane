@@ -49,7 +49,7 @@ class HsUser(AbstractBaseUser):
     )
     full_name = models.CharField(max_length=64)
     email_visible = models.BooleanField('epostamı başkaları görebilsin mi?', default=False)
-    nickname = models.CharField(max_length=32,blank=True, null=True)
+    nickname = models.CharField(max_length=32, blank=True, null=True)
     cell_phone_number = models.CharField(max_length=16)
     cell_phone_number_visible = models.BooleanField('telefonumu numaramı başkaları görebilsin mi?', default=False)
     is_student = models.BooleanField(default=False)
