@@ -13,6 +13,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
+ADMINS = (
+     ('Elif T. Kus', 'elifkus@gmail.com'),
+)
+
+MANAGERS = ADMINS
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
@@ -163,7 +169,29 @@ SOCIALACCOUNT_PROVIDERS = \
           'AUTH_PARAMS': { 'access_type': 'online' } }
     }
     
-    
+# A sample logging configuration. The only tangible logging
+# performed by this configuration is to send an email to
+# the site admins on every HTTP 500 error.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
+
 
 try:
     from hackerhane.local_settings import *
