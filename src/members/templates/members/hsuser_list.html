@@ -5,7 +5,12 @@ Uyeler
 <table>
 {% for member in object_list %}
 	<tr>
-		<td><a href="{% url 'show-member' member.id %}">{{ member.full_name }}</a></td>
+		<td>
+			<a href="{% url 'show-member' member.id %}">{{ member.full_name }}</a>
+			{% if request.user.id == member.id %}
+				<a href="{% url 'edit-current-user' %}">Değiştir</a>
+			{% endif %}
+		</td>
 	</tr>
 {% endfor %}
 </table>

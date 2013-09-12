@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>İşlemler</h1>
+	<table class="">
+	{% for transaction in object_list %}
+	    <tr>
+	    	<td>{{ transaction.realized_date|date }}</td> 
+	    	<td>{{ transaction.amount }}</td>
+	    	<td>{{ transaction.type }}</td>
+	    <tr>
+		{% empty %}
+		<tr><td>İşlem yok.</td></tr>
+	{% endfor %}
+	</table>
+{% endblock content %}

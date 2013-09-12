@@ -4,6 +4,7 @@ from hackerhane import settings
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.core.urlresolvers import reverse
 
 
 class HsUserManager(BaseUserManager):
@@ -51,7 +52,7 @@ class HsUser(AbstractBaseUser):
     email_visible = models.BooleanField('epostamı başkaları görebilsin mi?', default=False)
     nickname = models.CharField(max_length=32, blank=True, null=True)
     cell_phone_number = models.CharField(max_length=16)
-    cell_phone_number_visible = models.BooleanField('telefonumu numaramı başkaları görebilsin mi?', default=False)
+    cell_phone_number_visible = models.BooleanField('telefon numaramı başkaları görebilsin mi?', default=False)
     is_student = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -81,7 +82,9 @@ class HsUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-
+    
+    def get_absolute_url(self):
+        return reverse('show-member', kwargs={'pk': self.pk})
     @property
     def is_staff(self):
         return self.is_admin
