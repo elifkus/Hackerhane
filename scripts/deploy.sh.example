@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+VIRTUALENV_DIR=/path/to/virtual/envir/dir
+GIT_SRC_DIR=/git/source/dir/
+REQUIREMENTS_FILE=dirto/requirements.txt
+
+# update django project
+source $VIRTUALENV_DIR/bin/activate
+
+cd $GIT_SRC_DIR   
+git pull
+pip install -r $REQUIREMENTS_FILE
+python manage.py syncdb
+#python manage.py migrate # if you use south
+python manage.py collectstatic --noinput
+
+# restart webserver
+service uwsgi restart
+/etc/init.d/nginx restart
