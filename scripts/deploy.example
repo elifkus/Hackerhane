@@ -1,0 +1,30 @@
+""" Deployment of your django project.
+"""
+
+from fabric.api import *
+
+env.hosts = ['yourdomain.com']
+env.user = "your-user"
+
+def update_django_project():
+    """ Updates the remote django project.
+    """
+    with cd('/path/to/your/django/project'):
+        run('git pull')
+        with prefix('source /path/to/your/virtualenv/bin/activate'):
+            run('pip install -r your_pip_requirement_file.txt')
+            run('python manage.py syncdb')
+            run('python manage.py migrate') # if you use south
+            run('python manage.py collectstatic --noinput')
+
+def restart_webserver():
+    """ Restarts remote nginx and uwsgi.
+    """
+    sudo("service uwsgi restart")
+    sudo("/etc/init.d/nginx restart")
+
+def deploy():
+    """ Deploy Django Project.
+    """
+    update_django_project()
+    restart_webserver()
