@@ -2,6 +2,8 @@ from django.db import models
 from datetime import timedelta
 from common.models import PAYMENT_MEDIA
 from common.models import BaseModelWithTimestamps
+from hackerhane import settings
+from django.utils import dateformat
 
 class TransactionType(models.Model):
     name = models.CharField(max_length=64)
@@ -17,6 +19,16 @@ class Transaction(BaseModelWithTimestamps):
     type = models.ForeignKey(TransactionType)
     payment_media = models.CharField(max_length=32, choices=PAYMENT_MEDIA)
 
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "amount": str(self.amount),
+            "realized_date": dateformat.format(self.realized_date, settings.DATE_FORMAT),
+            "note": self.note,
+            "type": str(self.type),
+            "payment_media": self.payment_media,
+        }
+        
     def balance(self):
         day_before = self.date - timedelta(days=1)      
         end_of_day = EndOfDayBalance.objects.filter(date=day_before)
