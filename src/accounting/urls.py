@@ -12,6 +12,7 @@ from accounting.models import Transaction
 urlpatterns = patterns('',
     url(r'^$', login_required(ListView.as_view(
         model=Transaction,
+        queryset=Transaction.objects.order_by("-realized_date"),
         )), 
         name = 'transaction-list'
     ),

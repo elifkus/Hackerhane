@@ -122,6 +122,8 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+DATE_FORMAT = 'j N Y'
+
 #allauth settings
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 
@@ -198,7 +200,7 @@ LOGGING = {
         'logfile': {
             'level':'INFO',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/django/django.log',
+            'filename': '/usr/local/virtualenvs/hs-members-server/logs/django.log',
             'maxBytes': 50000,
             'backupCount': 2,
             'formatter': 'standard',
