@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="{% static "css/main.css" %}">
 
         <script src="{% static "js/vendor/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
+        {% block extrahead %}
+        {% endblock %}
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -73,7 +75,10 @@
             </footer>
         </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		{% block loadjquery %}
+        	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		{% endblock %}
+        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
         <script src="{% static "js/plugins.js" %}"></script>
