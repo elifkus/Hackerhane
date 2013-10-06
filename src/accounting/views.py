@@ -36,8 +36,9 @@ class TransactionGrid(CustomJqGrid):
     url = reverse_lazy('grid_handler')
     extra_config = {'sortname': 'realized_date', 'sortorder': 'desc'}
     caption = 'İşlemler' # optional
-    colmodel_overrides = {'type__name': {'label':'Type'},}
-     
+    colmodel_overrides = {'type__name': {'label':'Type'}, 
+                          'realized_date': {'label':'Date', 'formatter':'date', 
+                                            'formatoptions':{'newformat':'j M Y',}}}
     
 def grid_handler(request):
     # handles pagination, sorting and searching
