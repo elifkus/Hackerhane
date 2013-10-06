@@ -1,35 +1,28 @@
 {% extends "base_with_grid.html" %}
 
+
 {% block extrahead %}
 	{{ block.super }}
 	<script type="text/javascript">
 	$(function () {
-	    $("#list").jqGrid({
-	        url: "/islemler/json",
-	        datatype: "json",
-	        mtype: "GET",
-	        colNames: [ "Date", "Type", "Note", "Media", "Amount"],
-	        colModel: [
-	        	{ name: "realized_date", width: 120, align: "right" },
-	            { name: "type", width: 120 },
-	            { name: "note", width: 150 },
-	            { name: "payment_media", width: 150, align: "right" },
-	            { name: "amount", width: 60, align: "right" }
-	        ],
-	        pager: "#pager",
-	        rowNum: 10,
-	        rowList: [10, 20, 30],
-	        sortname: "realized_date",
-	        sortorder: "desc",
-	        viewrecords: true,
-	        gridview: true,
-	        autoencode: true,
-	        caption: "İşlemler"
-	    }); 
-	}); 
+	    $.getJSON("{% url 'grid_config' %}", function(data){
+	        $("#list")
+	            .jqGrid(data)
+	            .navGrid('#pager', 
+	                {add: false, edit: false, del: false, view: true},
+	        		{}, // edit options
+	        		{}, // add options
+	        		{}, // del options 
+	        		{ multipleSearch:true, closeOnEscape:true }, // search options 
+	        		{ jqModal:false, closeOnEscape:true} // view options 
+	        );
+	    });
+	});
 	</script>
 {% endblock extrahead %}
 {% block content %}
 	<table id="list"><tr><td></td></tr></table> 
     <div id="pager"></div>
 {% endblock content %}
+
+
