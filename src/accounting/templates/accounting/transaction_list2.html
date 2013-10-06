@@ -1,0 +1,25 @@
+{% extends "base_with_grid.html" %}
+
+{% block extrahead %}
+	{{ block.super }}
+	<script type="text/javascript">
+	$(function () {
+    $.getJSON("{% url 'grid_config' %}", function(data){
+        $("#list")
+            .jqGrid(data)
+            .navGrid('#pager', 
+                {add: false, edit: false, del: false, view: true},
+        {}, // edit options
+        {}, // add options
+        {}, // del options 
+        { multipleSearch:true, closeOnEscape:true }, // search options 
+        { jqModal:false, closeOnEscape:true} // view options 
+        );
+    });
+});
+	</script>
+{% endblock extrahead %}
+{% block content %}
+	<table id="list"><tr><td></td></tr></table> 
+    <div id="pager"></div>
+{% endblock content %}
