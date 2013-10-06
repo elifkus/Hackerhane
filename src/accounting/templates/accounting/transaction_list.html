@@ -8,14 +8,6 @@
 	    $.getJSON("{% url 'grid_config' %}", function(data){
 	        $("#list")
 	            .jqGrid(data)
-	            .navGrid('#pager', 
-	                {add: false, edit: false, del: false, view: true},
-	        		{}, // edit options
-	        		{}, // add options
-	        		{}, // del options 
-	        		{ multipleSearch:true, closeOnEscape:true }, // search options 
-	        		{ jqModal:false, closeOnEscape:true} // view options 
-	        );
 	    });
 	});
 	</script>
