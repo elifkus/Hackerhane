@@ -1,16 +1,35 @@
 {% extends "base_with_grid.html" %}
 
+{% block extrahead %}
+	{{ block.super }}
+	<script type="text/javascript">
+	$(function () {
+	    $("#list").jqGrid({
+	        url: "/islemler/json",
+	        datatype: "json",
+	        mtype: "GET",
+	        colNames: [ "Date", "Type", "Note", "Media", "Amount"],
+	        colModel: [
+	        	{ name: "realized_date", width: 120, align: "right" },
+	            { name: "type", width: 120 },
+	            { name: "note", width: 150 },
+	            { name: "payment_media", width: 150, align: "right" },
+	            { name: "amount", width: 60, align: "right" }
+	        ],
+	        pager: "#pager",
+	        rowNum: 10,
+	        rowList: [10, 20, 30],
+	        sortname: "realized_date",
+	        sortorder: "desc",
+	        viewrecords: true,
+	        gridview: true,
+	        autoencode: true,
+	        caption: "İşlemler"
+	    }); 
+	}); 
+	</script>
+{% endblock extrahead %}
 {% block content %}
-	<h1>İşlemler</h1>
-	<table class="">
-	{% for transaction in object_list %}
-	    <tr>
-	    	<td>{{ transaction.realized_date|date }}</td> 
-	    	<td>{{ transaction.amount }}</td>
-	    	<td>{{ transaction.type }}</td>
-	    <tr>
-		{% empty %}
-		<tr><td>İşlem yok.</td></tr>
-	{% endfor %}
-	</table>
+	<table id="list"><tr><td></td></tr></table> 
+    <div id="pager"></div>
 {% endblock content %}
