@@ -6,8 +6,11 @@
 	<script type="text/javascript">
 	$(function () {
 	    $.getJSON("{% url 'grid_config' %}", function(data){
+	        data['groupingView']['isInTheSameGroup'] =  [function (prev_value, current_value, group_index, group_object) { 
+	        												return (new Date(prev_value)).getMonth() === (new Date(current_value)).getMonth();
+	        												},];
 	        $("#list")
-	            .jqGrid(data)
+	            .jqGrid(data);
 	    });
 	});
 	</script>

@@ -4,6 +4,7 @@ from accounting.models import Transaction
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import FieldError
 
+
 class CustomJqGrid(JqGrid):
     def field_to_colmodel(self, field, field_name):
         colmodel = super(CustomJqGrid, self).field_to_colmodel(field, field_name)
@@ -26,7 +27,6 @@ class CustomJqGrid(JqGrid):
             try:
                 items = items.order_by(order_by)
             except FieldError:
-                items = items.order_by('type__'+order_by)
                 pass
         return items
     
@@ -34,11 +34,26 @@ class TransactionGrid(CustomJqGrid):
     model = Transaction # could also be a queryset
     fields = ['payment_media', 'type__name', 'note', 'amount', 'realized_date'] # optional 
     url = reverse_lazy('grid_handler')
-    extra_config = {'sortname': 'realized_date', 'sortorder': 'desc'}
+    extra_config = {'sortname': 'realized_date', 
+                    'sortorder': 'desc',
+                    'grouping': True,
+                    'groupingView': {
+                        'groupField': ["realized_date"],
+                        'groupSummary' : [True],
+                        'groupColumnShow' : [True], 
+                        'isInTheSameGroup': "check template",
+                        'groupText': ['<b>{0}</b>'],
+                        'showSummaryOnHide': True,
+                        'groupOrder': ['desc']
+                        }
+                    }
+    
     caption = 'İşlemler' # optional
     colmodel_overrides = {'type__name': {'label':'Type'}, 
                           'realized_date': {'label':'Date', 'formatter':'date', 
-                                            'formatoptions':{'newformat':'j M Y',}}}
+                                            'formatoptions':{'newformat':'j M Y',}},
+                          'amount': {'summaryType': 'sum',}
+                         }
     
 def grid_handler(request):
     # handles pagination, sorting and searching
