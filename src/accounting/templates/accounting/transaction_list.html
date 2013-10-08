@@ -24,10 +24,8 @@
 	        var fullOpts = $.extend({}, $.jgrid.formatter.date, opts),
 	            formattedDate = $.fn.fmatter.call(this, "date", cellval, opts, rowObject, action),
 	            groupIdPrefix = opts.gid + "ghead_",
-	            groupIdPrefixLength = groupIdPrefix.length,
-	            month = Number(cellval.split("-")[1]), // input format "Y-m-d"
-	            names = [], data, i, l, item;
-	
+	            groupIdPrefixLength = groupIdPrefix.length;
+	           
 	        // test wether opts.rowId start with opts.gid + "ghead_" and integer
 	        // and rowObject is the array and action is undefined.
 	
