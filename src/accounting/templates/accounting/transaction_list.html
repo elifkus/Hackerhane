@@ -33,7 +33,7 @@
 	
 	        if (opts.rowId.substr(0, groupIdPrefixLength) === groupIdPrefix && typeof action === "undefined") {
 	            // custom formating of the group header
-	            parts = formattedDate.split(" ")
+	            parts = formattedDate.split(" ");
 	            return parts[1]+ " " + parts[2];
 	        }
 	        return formattedDate;
