@@ -48,16 +48,16 @@ class HsUser(AbstractBaseUser):
         unique=True,
         db_index=True,
     )
-    full_name = models.CharField(max_length=64)
+    full_name = models.CharField('isim soyisim',max_length=64)
     email_visible = models.BooleanField('epostamı başkaları görebilsin mi?', default=False)
-    nickname = models.CharField(max_length=32, blank=True, null=True)
-    cell_phone_number = models.CharField(max_length=16)
+    nickname = models.CharField('nick', max_length=32, blank=True, null=True)
+    cell_phone_number = models.CharField('cep numarası', max_length=16)
     cell_phone_number_visible = models.BooleanField('telefon numaramı başkaları görebilsin mi?', default=False)
-    is_student = models.BooleanField(default=False)
+    is_student = models.BooleanField('öğrenci miyim?', default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    summary = models.TextField(blank=True, null=True)
-    reason = models.TextField(blank=True, null=True)
+    summary = models.TextField('ben kimim ne yaparım?', blank=True, null=True)
+    reason = models.TextField('hackerspace çünkü', blank=True, null=True)
     
     objects = HsUserManager()
 
