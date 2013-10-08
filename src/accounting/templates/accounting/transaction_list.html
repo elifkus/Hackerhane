@@ -6,13 +6,39 @@
 	<script type="text/javascript">
 	$(function () {
 	    $.getJSON("{% url 'grid_config' %}", function(data){
+	        data['colModel'][4]['formatter'] = dateformatter;
 	        data['groupingView']['isInTheSameGroup'] =  [function (prev_value, current_value, group_index, group_object) { 
 	        												return (new Date(prev_value)).getMonth() === (new Date(current_value)).getMonth();
 	        												},];
-	        $("#list")
-	            .jqGrid(data);
+	        data['loadComplete'] = function () {
+                    var sum = grid.jqGrid('getCol', 'amount', false, 'sum');
+                    grid.jqGrid('footerData','set', {note: 'Total:', amount: sum});
+               };
+		
+	        var grid = $("#list");
+	        grid.jqGrid(data);
+	   
 	    });
 	});
+	function dateformatter(cellval, opts, rowObject, action) {
+	        var fullOpts = $.extend({}, $.jgrid.formatter.date, opts),
+	            formattedDate = $.fn.fmatter.call(this, "date", cellval, opts, rowObject, action),
+	            groupIdPrefix = opts.gid + "ghead_",
+	            groupIdPrefixLength = groupIdPrefix.length,
+	            month = Number(cellval.split("-")[1]), // input format "Y-m-d"
+	            names = [], data, i, l, item;
+	
+	        // test wether opts.rowId start with opts.gid + "ghead_" and integer
+	        // and rowObject is the array and action is undefined.
+	
+	        if (opts.rowId.substr(0, groupIdPrefixLength) === groupIdPrefix && typeof action === "undefined") {
+	            // custom formating of the group header
+	            parts = formattedDate.split(" ")
+	            return parts[1]+ " " + parts[2];
+	        }
+	        return formattedDate;
+    	}
+
 	</script>
 {% endblock extrahead %}
 {% block content %}

@@ -45,14 +45,15 @@ class TransactionGrid(CustomJqGrid):
                         'groupText': ['<b>{0}</b>'],
                         'showSummaryOnHide': True,
                         'groupOrder': ['desc']
-                        }
+                        },
+                    "footerrow": True,
                     }
-    
     caption = 'İşlemler' # optional
     colmodel_overrides = {'type__name': {'label':'Type'}, 
-                          'realized_date': {'label':'Date', 'formatter':'date', 
+                          'realized_date': {'label':'Date', 'formatter':'check template', 
                                             'formatoptions':{'newformat':'j M Y',}},
-                          'amount': {'summaryType': 'sum',}
+                          'amount': {'summaryType': 'sum',},
+                          'note': {'summaryType': 'sum','summaryTpl':'Aylık Total',}
                          }
     
 def grid_handler(request):
