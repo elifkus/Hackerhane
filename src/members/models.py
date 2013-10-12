@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.core.urlresolvers import reverse
+from common.models import MONTHS
 
 
 class HsUserManager(BaseUserManager):
@@ -88,7 +89,7 @@ class HsUser(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
-    
+
     
 class WebLink(models.Model):
     WEB_SITES = (
@@ -103,7 +104,18 @@ class WebLink(models.Model):
     link = models.URLField()
     
 
-    
+class ExistingMemberInformation(models.Model):    
+    email = models.EmailField(
+        verbose_name='eposta adresi',
+        max_length=255,
+        unique=True,
+        db_index=True,
+    )
+    full_name = models.CharField('isim soyisim',max_length=64)
+    cell_phone_number = models.CharField('cep numarası', max_length=16)
+    is_student = models.BooleanField('öğrenci miyim?', default=False)
+    is_active = models.BooleanField(default=True)
+    member_since_month = models.IntegerField(choices=MONTHS)
     
 
     

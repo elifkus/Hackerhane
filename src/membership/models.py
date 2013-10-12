@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
 from accounting.models import Transaction
 from common.models import PAYMENT_MEDIA
-    
+from common.models import MONTHS    
 
 
 class MembershipType(models.Model):
@@ -20,21 +20,6 @@ class Membership(models.Model):
 
 
 class FeePayment(models.Model):
-    MONTHS = (
-        (1, 'Ocak'),
-        (2, 'Şubat'),
-        (3, 'Mart'),
-        (4, 'Nisan'),
-        (5, 'Mayıs'),
-        (6, 'Haziran'),
-        (7, 'Temmuz'),
-        (8, 'Ağustos'),
-        (9, 'Eylül'),
-        (10, 'Ekim'),
-        (11, 'Kasım'),
-        (12, 'Aralık'),        
-    )
-        
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     payment_date = models.DateField()
     paid_month = models.IntegerField(choices=MONTHS)
