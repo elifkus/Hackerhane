@@ -4,10 +4,10 @@ Created on Aug 25, 2013
 @author: elif
 '''
 from django.core.management.base import LabelCommand, CommandError
-
 from datetime import datetime, date
 from accounting.models import ExpectedIncome, MonthlyRecurringExpense,ExpectedExpense
-from membership.models import Membership, Payment
+from membership.models import Membership
+from calendar import monthrange
 
 
 class Command(LabelCommand):
@@ -22,18 +22,20 @@ class Command(LabelCommand):
         except ValueError as  e:
             self.stderr.write("Argument supplied is not an integer")
             raise CommandError(e)
-        
-        memberships_unpaid = Membership.objects.all().exclude(payment__paid_month=1)
+        __unused_weekday, last_day = monthrange(2013, month_int)
+        memberships_unpaid = Membership.objects.all().exclude(feepayment__paid_month__range=(date(2013, month_int, 1), date(2013, month_int, last_day)))
         
         for membership in memberships_unpaid:
             amount = membership.custom_amount or membership.type.monthly_fee_amount
-            month_str = Payment.MONTHS[month_int-1][1]
-            note = month_str + " ayı aidatı - " + " ".join(membership.users) 
+            #TODO: Fix this use django date format
+            month_str = date(2013, month_int, 1).strftime("%B")
+
+            note = month_str + " ayı aidatı - " + str(membership)
             today = datetime.today()
-            expected_date = date(today.year, month_int, 5)
+            expected_date = date(today.year, month_int, 1)
         
-            expected_income = ExpectedIncome(amount=amount, note=note, type=1,  
-                                        expected_date=expected_date, membership=membership)
+            expected_income = ExpectedIncome(amount=amount, note=note, type_id=1,  
+                                        expected_date=expected_date)
             
             expected_income.save()
 
