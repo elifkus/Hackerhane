@@ -9,7 +9,7 @@ from membership.models import Membership
 
 
 class HsUserManager(BaseUserManager):
-    def create_user(self, email, cell_phone_number, is_student, password=None):
+    def create_user(self, email, cell_phone_number, is_student, password=None, **kwargs):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -17,15 +17,24 @@ class HsUserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
 
+        full_name = kwargs.get("full_name", None)
+        is_active = kwargs.get("is_active", False)
+        
         user = self.model(
             email=self.normalize_email(email),
             cell_phone_number=cell_phone_number,
-            is_student=is_student
+            is_student=is_student, full_name=full_name, 
+            is_active=is_active
         )
+        
+        if password:
+            user.set_password(password)
+        else:
+            user.set_unusable_password()
 
-        user.set_password(password)
         user.save(using=self._db)
         return user
+
 
     def create_superuser(self, email, cell_phone_number, is_student, password):
         """
@@ -38,6 +47,7 @@ class HsUserManager(BaseUserManager):
             password=password
         )
         user.is_admin = True
+        user.is_active = False
         user.save(using=self._db)
         return user
 
