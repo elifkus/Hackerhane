@@ -5,6 +5,8 @@ Created on Sep 9, 2013
 '''
 from django import forms
 from common.forms import ReadOnlyField
+
+
 class SignupForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
@@ -14,7 +16,6 @@ class SignupForm(forms.Form):
         else:
             self.fields['email'].widget.attrs['readonly'] = True
             
-                
     full_name = forms.CharField(max_length=64)
     email = ReadOnlyField()
     cell_phone_number = forms.CharField(max_length=16)

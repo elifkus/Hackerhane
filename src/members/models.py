@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.core.urlresolvers import reverse
-from common.models import MONTHS
+from membership.models import Membership
 
 
 class HsUserManager(BaseUserManager):
@@ -115,7 +115,7 @@ class ExistingMemberInformation(models.Model):
     cell_phone_number = models.CharField('cep numarası', max_length=16)
     is_student = models.BooleanField('öğrenci miyim?', default=False)
     is_active = models.BooleanField(default=True)
-    member_since_month = models.IntegerField(choices=MONTHS)
-    
+    member_since_date = models.DateField()
+    memberships = models.ManyToManyField(Membership, null=True, blank=True) 
 
     

@@ -5,24 +5,31 @@ from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
 from accounting.models import Transaction
 from common.models import PAYMENT_MEDIA
-from common.models import MONTHS    
 
 
 class MembershipType(models.Model):
     name = models.CharField(max_length=32)
     monthly_fee_amount = models.DecimalField(max_digits=12, decimal_places=2)
     
+    def __str__(self):
+        return self.name
+
     
 class Membership(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     type = models.ForeignKey(MembershipType)
-    custom_amount = models.DecimalField(max_digits=12, decimal_places=2)
-
+    custom_amount = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    membership_start_date = models.DateField()
+    membership_end_date = models.DateField(null=True, blank=True)
+    
+    def __str__(self):
+        users_str = [str(user) for user in self.users.all()]
+        return "%s - %s" % ("~".join(users_str), self.type)
 
 class FeePayment(models.Model):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     payment_date = models.DateField()
-    paid_month = models.IntegerField(choices=MONTHS)
+    paid_month = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='+')
     updated = models.DateTimeField(auto_now=True)
