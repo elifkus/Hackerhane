@@ -8,6 +8,7 @@ from datetime import datetime, date
 from accounting.models import ExpectedIncome, MonthlyRecurringExpense,ExpectedExpense
 from membership.models import Membership
 from calendar import monthrange
+from django.utils.dates import MONTHS
 
 
 class Command(LabelCommand):
@@ -28,8 +29,8 @@ class Command(LabelCommand):
         for membership in memberships_unpaid:
             amount = membership.custom_amount or membership.type.monthly_fee_amount
             #TODO: Fix this use django date format
-            month_str = date(2013, month_int, 1).strftime("%B")
-
+            month_str = MONTHS[month_int]
+            
             note = month_str + " ayı aidatı - " + str(membership)
             today = datetime.today()
             expected_date = date(today.year, month_int, 1)
