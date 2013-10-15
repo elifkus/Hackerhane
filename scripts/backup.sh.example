@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #database backup
 #create a cron for everyday backup
-#example:
+#example: crontab -e 
+#03 22 * * * /path/to/script/backup.sh 2>&1
 TIMESTAMP=$(date +%F_%T)
 DATED_BACKUP_FILE=hackerhane-$TIMESTAMP
 BACKUP_DIR=/path/to/backup
