@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#database backup
+#create a cron for everyday backup
+#example:
+TIMESTAMP=$(date +%F_%T)
+DATED_BACKUP_FILE=hackerhane-$TIMESTAMP
+BACKUP_DIR=/path/to/backup
+
+cd /tmp
+pg_dump -U postgres hackerhane > $DATED_BACKUP_FILE.backup
+
+tar cvzf $DATED_BACKUP_FILE.tgz $DATED_BACKUP_FILE.backup
+
+cp /tmp/$DATED_BACKUP_FILE.tgz $BACKUP_DIR/.
+rm -rf  /tmp/$DATED_BACKUP_FILE.*
