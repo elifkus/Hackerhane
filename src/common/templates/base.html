@@ -32,19 +32,6 @@
 		<!--[if lt IE 7]>
 		<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->
-
-		<!--<div class="header-container">
-		<header class="wrapper clearfix">
-		<h1 class="title"><a href="{% url 'home' %}">Space</a></h1>
-		<nav>
-		<ul>
-		<li><a href="{% url 'member-list' %}">Üyeler</a></li>
-		<li><a href="#">Ödemelerim</a></li>
-		<li><a href="{% url 'transaction-list' %}">Gelir-Gider</a></li>
-		</ul>
-		</nav>
-		</header>
-		</div>-->
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -53,24 +40,25 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Project name</a>
+					<a class="navbar-brand" href="{% url 'home' %}">Hackerspace Üye</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li class="active">
-							<a href="#">Home</a>
+					{% if user.is_authenticated %}
+						<li>
+							<a href="{% url 'member-list' %}">Üyeler</a>
 						</li>
 						<li>
-							<a href="#about">About</a>
+							<a href="#">Ödemelerim</a>
 						</li>
 						<li>
-							<a href="#contact">Contact</a>
+							<a href="{% url 'transaction-list' %}">Gelir-Gider</a>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hesap<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#">Action</a>
+									<a href="{% url 'account_logout' %}">Çıkış</a>
 								</li>
 								<li>
 									<a href="#">Another action</a>
@@ -90,6 +78,7 @@
 								</li>
 							</ul>
 						</li>
+					{% endif %}
 					</ul>
 					<form class="navbar-form navbar-right">
 						<div class="form-group">
@@ -105,86 +94,56 @@
 				</div><!--/.navbar-collapse -->
 			</div>
 		</div>
-
-		<!--<div class="main-container">
-		<div class="main wrapper clearfix">
-		{% block content %}
-		<article>
-		<header>
-		<h1>article header h1</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
-		</header>
-		<section>
-		<h2>article section h2</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-		</section>
-		<section>
-		<h2>article section h2</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-		</section>
-		<footer>
-		<h3>article footer h3</h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
-		</footer>
-		</article>
-
-		<aside>
-		<h3>aside</h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices.</p>
-		</aside>
-
-		{% endblock content %}
-
-		</div>
-		</div> <!-- #main-container -->
-		<!-- Main jumbotron for a primary marketing message or call to action -->
-		<div class="jumbotron">
-			<div class="container">
-				<h1>Hello, world!</h1>
-				<p>
-					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-				</p>
-				<p>
-					<a class="btn btn-primary btn-lg">Learn more &raquo;</a>
-				</p>
-			</div>
-		</div>
-
 		<div class="container">
-			<!-- Example row of columns -->
-			<div class="row">
-				<div class="col-lg-4">
-					<h2>Heading</h2>
+		{% block content %}
+			<!-- Main jumbotron for a primary marketing message or call to action -->
+			<div class="jumbotron">
+				<div class="container">
+					<h1>Hello, world!</h1>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
 					</p>
 					<p>
-						<a class="btn btn-default" href="#">View details &raquo;</a>
-					</p>
-				</div>
-				<div class="col-lg-4">
-					<h2>Heading</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn btn-default" href="#">View details &raquo;</a>
-					</p>
-				</div>
-				<div class="col-lg-4">
-					<h2>Heading</h2>
-					<p>
-						Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-					</p>
-					<p>
-						<a class="btn btn-default" href="#">View details &raquo;</a>
+						<a class="btn btn-primary btn-lg">Learn more &raquo;</a>
 					</p>
 				</div>
 			</div>
-
+			<div class="container">
+				<!-- Example row of columns -->
+				<div class="row">
+					<div class="col-lg-4">
+						<h2>Heading</h2>
+						<p>
+							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						</p>
+						<p>
+							<a class="btn btn-default" href="#">View details &raquo;</a>
+						</p>
+					</div>
+					<div class="col-lg-4">
+						<h2>Heading</h2>
+						<p>
+							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						</p>
+						<p>
+							<a class="btn btn-default" href="#">View details &raquo;</a>
+						</p>
+					</div>
+					<div class="col-lg-4">
+						<h2>Heading</h2>
+						<p>
+							Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+						</p>
+						<p>
+							<a class="btn btn-default" href="#">View details &raquo;</a>
+						</p>
+					</div>
+				</div>
+			{% endblock content %}
+			</div>
 			<hr>
-			<footer class="wrapper">
-				<h3>footer</h3>
+			<footer>
+				<p>footer</p>
 			</footer>
 
 		</div><!-- /container -->
@@ -192,7 +151,7 @@
 		{% block loadjquery %}
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		{% endblock %}
-
+		
 		<script>
 			window.jQuery || document.write('<script src=\'{% static "js/vendor/jquery-1.10.1.min.js" %}\'><\/script>')
 		</script>
