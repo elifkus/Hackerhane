@@ -2,10 +2,13 @@ from django.db import models
 from hackerhane import settings
 
 from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+    BaseUserManager, AbstractBaseUser, Group, PermissionsMixin)
 from django.core.urlresolvers import reverse
 from membership.models import Membership
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class HsUserManager(BaseUserManager):
@@ -27,6 +30,8 @@ class HsUserManager(BaseUserManager):
             is_active=is_active
         )
         
+        add_to_member_group(user)
+        
         if password:
             user.set_password(password)
         else:
@@ -36,23 +41,47 @@ class HsUserManager(BaseUserManager):
         return user
 
 
-    def create_superuser(self, email, cell_phone_number, is_student, password):
+    def create_superuser(self, email, cell_phone_number, is_student, password, **kwargs):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
+        full_name = kwargs.get("full_name", None)
+
         user = self.create_user(email,
             cell_phone_number=cell_phone_number,
             is_student=is_student,
-            password=password
+            password=password,
+            full_name=full_name
         )
         user.is_admin = True
         user.is_active = False
+        
+        full_name = kwargs.get("full_name", None)
+        
+        user.full_name = full_name
+                
         user.save(using=self._db)
         return user
 
 
-class HsUser(AbstractBaseUser):
+def add_to_member_group(user):
+    if check_if_existing_hackerspace_member(user.email):
+        group = Group.objects.get(name="Member")
+        user.groups.add(group)
+
+def check_if_existing_hackerspace_member(email):
+    exists = False
+    
+    try:
+        ExistingMemberInformation.objects.get(email=email)
+        exists =  True
+    except ExistingMemberInformation.DoesNotExist:
+        logger.info("User with email address %s could not be found" % email)
+        pass
+    return exists
+
+class HsUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='eposta adresi',
         max_length=255,
@@ -69,6 +98,7 @@ class HsUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     summary = models.TextField('ben kimim ne yaparım?', blank=True, null=True)
     reason = models.TextField('hackerspace çünkü', blank=True, null=True)
+    
     
     objects = HsUserManager()
 
