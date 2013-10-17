@@ -1,15 +1,27 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
-from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView
 from members.models import HsUser
 
 
-@login_required
 def home(request):
+    user = request.user
     
-    return render_to_response('index.html',
+    if user.is_authenticated():
+        if user.is_active:
+            return render_to_response('index.html',
                         context_instance=RequestContext(request))
+        else:
+            return render_to_response('not_allowed.html',
+                        context_instance=RequestContext(request))
+    else:
+        return redirect("/accounts/login/")
+    
+    
+def ask_admin(request):
+    return render_to_response('not_allowed.html',
+                        context_instance=RequestContext(request))
+
     
 class OwnUserUpdateView(UpdateView):
     model = HsUser

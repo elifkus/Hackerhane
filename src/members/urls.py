@@ -18,5 +18,5 @@ urlpatterns = patterns('',
                        name='show-member'),
     url(r'^degistir/$', login_required(
             OwnUserUpdateView.as_view()),
-        name='edit-current-user')
+        name='edit-current-user'),
 )

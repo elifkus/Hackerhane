@@ -26,12 +26,11 @@ class HsUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             cell_phone_number=cell_phone_number,
-            is_student=is_student, full_name=full_name, 
-            is_active=is_active
+            is_student=is_student, full_name=full_name
         )
         
-        add_to_member_group(user)
-        
+        user.is_active = is_active or check_if_existing_hackerspace_member(email)
+                
         if password:
             user.set_password(password)
         else:
@@ -64,12 +63,6 @@ class HsUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
-def add_to_member_group(user):
-    if check_if_existing_hackerspace_member(user.email):
-        group = Group.objects.get(name="Member")
-        user.groups.add(group)
-
 def check_if_existing_hackerspace_member(email):
     exists = False
     
@@ -96,9 +89,9 @@ class HsUser(AbstractBaseUser, PermissionsMixin):
     is_student = models.BooleanField('öğrenci miyim?', default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     summary = models.TextField('ben kimim ne yaparım?', blank=True, null=True)
     reason = models.TextField('hackerspace çünkü', blank=True, null=True)
-    
     
     objects = HsUserManager()
 
@@ -126,9 +119,6 @@ class HsUser(AbstractBaseUser, PermissionsMixin):
     
     def get_absolute_url(self):
         return reverse('show-member', kwargs={'pk': self.pk})
-    @property
-    def is_staff(self):
-        return self.is_admin
 
     
 class WebLink(models.Model):
