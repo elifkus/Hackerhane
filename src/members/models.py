@@ -2,7 +2,7 @@ from django.db import models
 from hackerhane import settings
 
 from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser, Group, PermissionsMixin)
+    BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.core.urlresolvers import reverse
 from membership.models import Membership
 import logging

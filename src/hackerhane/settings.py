@@ -164,7 +164,7 @@ SOCIALACCOUNT_PROVIDERS = \
         { 'SCOPE': ['email',],
           'AUTH_PARAMS': { 'auth_type': 'reauthenticate' },
           'METHOD': 'oauth2' ,
-          'LOCALE_FUNC': lambda request: 'tr_TR'},
+          'LOCALE_FUNC': lambda request: 'tr'},
       'google':
         { 'SCOPE': ['https://www.googleapis.com/auth/userinfo.profile', 
                     'https://www.googleapis.com/auth/userinfo.email'],
@@ -224,6 +224,7 @@ LOGGING = {
     }
 }
 
+LOGIN_REDIRECT_URL="/"
 
 try:
     from hackerhane.local_settings import *

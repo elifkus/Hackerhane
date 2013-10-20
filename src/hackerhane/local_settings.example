@@ -84,3 +84,6 @@ EMAIL_HOST_PASSWORD = 'password'
 
 DEFAULT_FROM_EMAIL = 'me@gmail.com'
 SERVER_EMAIL = 'me@gmail.com'
+
+LOCALE_PATHS=('/path/to/Hackerhane/src/common',)
+

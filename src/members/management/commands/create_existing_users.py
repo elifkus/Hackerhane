@@ -6,7 +6,6 @@ Created on Oct 13, 2013
 from django.core.management.base import NoArgsCommand
 
 from members.models import ExistingMemberInformation, HsUser
-from hackerhane import settings
 
 
 class Command(NoArgsCommand):
