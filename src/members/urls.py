@@ -4,6 +4,7 @@ from members.models import HsUser
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from members.views import OwnUserUpdateView
+from members import views
 
 
 urlpatterns = patterns('',
@@ -12,9 +13,7 @@ urlpatterns = patterns('',
         )), 
         name = 'member-list'
     ),
-    url(r'^uyeler/(?P<pk>\d+)/$', login_required(DetailView.as_view(
-                                model=HsUser,
-                                )),
+    url(r'^uyeler/(?P<pk>\d+)/$', login_required(views.view_user),
                        name='show-member'),
     url(r'^degistir/$', login_required(
             OwnUserUpdateView.as_view()),

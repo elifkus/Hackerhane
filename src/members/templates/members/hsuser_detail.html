@@ -8,11 +8,14 @@
 {% if object.email_visible %}<tr><td>{% get_field_label object 'email' %}:</td><td>{{ object.email }}</td></tr>{% endif %}
 {% if object.cell_phone_number_visible %}<tr><td>{% get_field_label object 'cell_phone_number' %}:</td><td>{{ object.cell_phone_number }}</td></tr>{% endif %}
 <tr><td>{% get_field_label object 'is_student' %}</td>
-	<td>{% if object.is_student %}Öğrenci{% endif %}{% if not object.is_student %}Çalışan{% endif %}</td>
+	<td>{% if object.is_student %}Evet{% endif %}{% if not object.is_student %}Hayır{% endif %}</td>
 </tr>
 {% if object.nickname %}<tr><td>{% get_field_label object 'nickname' %}</td><td>{{ object.nickname }}</td></tr>{% endif %}
 {% if object.summary %}<tr><td>{% get_field_label object 'summary' %}</td><td>{{ object.summary }}</td></tr>{% endif %}
 {% if object.reason %}<tr><td>{% get_field_label object 'reason' %}</td><td>{{ object.reason }}</td></tr>{% endif %}
+{% for link in links %}
+<tr><td>{{ link.get_type_display | title }}</td><td>{{ link.link | urlize }}</td></tr>
+{% endfor %}
 </table>
 {% endblock content %}
     
