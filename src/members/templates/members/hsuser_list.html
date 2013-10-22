@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-Uyeler
-<table>
+<h3>Üyeler</h3>
+<table class="members table table-striped">
 {% for member in object_list %}
 	<tr>
 		<td>
 			<a href="{% url 'show-member' member.id %}">{{ member.full_name }}</a>
+		</td>
+		<td>
 			{% if request.user.id == member.id %}
 				<a href="{% url 'edit-current-user' %}">Değiştir</a>
 			{% endif %}
@@ -15,3 +17,5 @@ Uyeler
 {% endfor %}
 </table>
 {% endblock content %}
+
+

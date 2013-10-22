@@ -8,7 +8,7 @@ from members.views import OwnUserUpdateView
 
 urlpatterns = patterns('',
     url(r'^uyeler/$', login_required(ListView.as_view(
-        model=HsUser,
+        queryset=HsUser.objects.all().exclude(email='kasa@istanbulhs.org'),
         )), 
         name = 'member-list'
     ),
