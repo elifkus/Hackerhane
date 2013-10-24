@@ -19,9 +19,11 @@ fi
 touch $LOG_DIR/django.log
 
 pip install -r $REQUIREMENTS_FILE
-python manage.py syncdb
+
+python $GIT_SRC_DIR/src/manage.py syncdb
 #python manage.py migrate # if you use south
-python manage.py collectstatic --noinput
+python $GIT_SRC_DIR/src/manage.py compilemessages
+python $GIT_SRC_DIR/src/manage.py collectstatic --noinput
 
 # restart webserver
 uwsgi --stop  /var/run/uwsgi.pid
