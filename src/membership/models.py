@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
 from accounting.models import Transaction
-from common.models import PAYMENT_MEDIA
+from common.models import PAYMENT_MEDIA, BaseModelWithTimestamps
+from common.utils import note_from_month
 
 
 class MembershipType(models.Model):
@@ -24,16 +25,18 @@ class Membership(models.Model):
     
     def __str__(self):
         users_str = [str(user) for user in self.users.all()]
-        return "%s - %s" % ("~".join(users_str), self.type)
+        
+        if not users_str:
+            users_str = ''
+        else:
+            users_str = "~".join(users_str)
+            
+        return "%s - %s" % (users_str, self.type)
 
-class FeePayment(models.Model):
+class FeePayment(BaseModelWithTimestamps):
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     payment_date = models.DateField()
     paid_month = models.DateField()
-    created = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='+')
-    updated = models.DateTimeField(auto_now=True)
-    updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=False, related_name='+')
     for_membership = models.ForeignKey(Membership) 
     approved = models.BooleanField(default=False)
     media = models.CharField(choices=PAYMENT_MEDIA, max_length=32) 
@@ -56,10 +59,9 @@ class FeePayment(models.Model):
 @receiver(post_save, sender=FeePayment)
 def insert_transaction_for_payment(sender, instance, **kwargs):
     if instance.approved:
-        note =  instance.get_month_display() + " ayı aidatı - " + " ".join(instance.for_membership.users) 
+        note = note_from_month(instance.paid_month.month, instance.for_membership)
         transaction = Transaction(amount=instance.amount, realized_date=instance.payment_date,
                                   created_by=instance.updated_by, updated_by=instance.updated_by,
                                   note=note, type_id=1, media=instance.media)
-        
         transaction.save()
         
