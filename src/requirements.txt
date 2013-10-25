@@ -3,3 +3,4 @@ psycopg2 #if you use psycopg2
 django-allauth
 django-bootstrap-form
 git+git://github.com/gerry/django-jqgrid
+django_dajax
