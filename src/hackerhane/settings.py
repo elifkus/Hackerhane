@@ -105,6 +105,12 @@ AUTH_USER_MODEL = 'members.HsUser'
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug", 
@@ -171,7 +177,11 @@ SOCIALACCOUNT_PROVIDERS = \
                     'https://www.googleapis.com/auth/userinfo.email'],
           'AUTH_PARAMS': { 'access_type': 'online' } }
     }
-    
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)  
 
 LOGIN_REDIRECT_URL="/"
 

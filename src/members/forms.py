@@ -5,6 +5,8 @@ Created on Sep 9, 2013
 '''
 from django import forms
 from common.forms import ReadOnlyField
+from django.forms.models import ModelForm
+from members.models import HsUser
 
 
 class SignupForm(forms.Form):
@@ -29,3 +31,14 @@ class SignupForm(forms.Form):
         user.save()
         
 
+class ExampleForm(forms.Form):
+    username = forms.CharField(max_length=30, label="Username")
+    email = forms.EmailField(label="Email")
+
+
+class HsUserForm(ModelForm):
+    class Meta:
+        model = HsUser
+        fields = ('full_name', 'email_visible', 'nickname', 'cell_phone_number', 
+                  'cell_phone_number_visible', 'is_student', 'summary', 'reason','id', 'email')
+        #exclude = ('email',)

@@ -2,7 +2,12 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.views.generic.edit import UpdateView
 from members.models import HsUser, WebLink
+from members.forms import HsUserForm
+from django.forms.models import inlineformset_factory
+import logging 
 
+
+logger = logging.getLogger(__name__)
 
 def home(request):
     user = request.user
@@ -39,11 +44,36 @@ def view_user(request, pk):
                                'links': links},
                                context_instance=RequestContext(request))
     
+
+def update_user(request):
     
+    if request.method == "POST":
+        user_form = HsUserForm(request.POST, prefix='user', instance=request.user)
+        WebLinkFormset = inlineformset_factory(HsUser, WebLink)
+        link_formset = WebLinkFormset(request.POST, request.FILES, instance=request.user, prefix="link")
+        
+        if user_form.is_valid() and link_formset.is_valid():
+            user_form.save()
+            link_formset.save()
+            return redirect(request.user.get_absolute_url())
+        
+    else:
+        user_form = HsUserForm(instance=request.user, prefix="user")
+        WebLinkFormset = inlineformset_factory(HsUser, WebLink)
+        link_formset = WebLinkFormset(instance=request.user, prefix="link")
+        
+    return render_to_response('members/hsuser_form.html',
+                                  {'user_form': user_form,
+                                   'link_formset': link_formset},
+                                  context_instance=RequestContext(request)
+                                 ) 
+        
+
 class OwnUserUpdateView(UpdateView):
     model = HsUser
     fields = ['email_visible','cell_phone_number','cell_phone_number_visible','full_name', 
                     'nickname','is_student', 'summary', 'reason']
+    
     def get_object(self, queryset=None):
         return HsUser.objects.get(pk=self.request.user.id)
     

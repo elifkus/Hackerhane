@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% load common %}
+{% load common staticfiles %}
+
 
 {% block content %}
+
 <h3>{{ object.full_name }}</h3>
 <table class="table members">
 {% if object.email_visible %}<tr><td>{% get_field_label object 'email' %}:</td><td>{{ object.email }}</td></tr>{% endif %}

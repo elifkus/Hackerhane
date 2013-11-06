@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="" method="post" role="form" >
+
+<form action="" method="post" role="form" id="user_form" >
 	{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Güncelle" />
+    {{ user_form.as_p }}
+    
+	{{ link_formset.management_form }}
+    {% for form in link_formset %}
+        {{ form.as_ul }}
+    {% endfor %}
+    <input type="submit" value="Güncelle"  />
 </form>
 {% endblock content %}
