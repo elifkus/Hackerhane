@@ -103,6 +103,19 @@
 		<div class="main container">
 			<div class="row">
 				<div class="col-lg-10 col-lg-offset-1">
+					{% if messages %}
+					<ul class="messages">
+					    {% for message in messages %}
+					    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					    {% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-lg-10 col-lg-offset-1">
 				{% block content %}
 					<!-- Main jumbotron for a primary marketing message or call to action -->
 					<div class="jumbotron">

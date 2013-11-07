@@ -5,6 +5,7 @@ from members.models import HsUser, WebLink
 from members.forms import HsUserForm
 from django.forms.models import inlineformset_factory
 import logging 
+from django.contrib import messages
 
 
 logger = logging.getLogger(__name__)
@@ -55,6 +56,9 @@ def update_user(request):
         if user_form.is_valid() and link_formset.is_valid():
             user_form.save()
             link_formset.save()
+            
+            messages.success(request, 'Bilgileriniz güncellendi.')
+            
             return redirect(request.user.get_absolute_url())
         
     else:
