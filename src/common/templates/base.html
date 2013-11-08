@@ -101,15 +101,21 @@
 			</div>
 		</div>
 		<div class="main container">
+			
 			<div class="row">
-				<div class="col-lg-10 col-lg-offset-1">
+				<div class="col-lg-6 col-lg-offset-2">
+					
 					{% if messages %}
-					<ul class="messages">
+					<div class="messages">
 					    {% for message in messages %}
-					    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					    <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+					    	{{ message }}
+					    </div>
 					    {% endfor %}
-					</ul>
+					</div>
 					{% endif %}
+					
 				</div>
 			</div>
 			
