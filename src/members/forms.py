@@ -37,6 +37,12 @@ class ExampleForm(forms.Form):
 
 
 class HsUserForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(HsUserForm, self).__init__(*args, **kwargs)
+        
+        self.fields['email'].widget.attrs['readonly'] = True
+ 
+    
     class Meta:
         model = HsUser
         fields = ('full_name', 'email_visible', 'nickname', 'cell_phone_number', 
