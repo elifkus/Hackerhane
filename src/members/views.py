@@ -1,6 +1,5 @@
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
-from django.views.generic.edit import UpdateView
 from members.models import HsUser, WebLink
 from members.forms import HsUserForm
 from django.forms.models import inlineformset_factory
@@ -71,6 +70,4 @@ def update_own_user(request):
                                    'link_formset': link_formset},
                                   context_instance=RequestContext(request)
                                  ) 
-       
-    
 

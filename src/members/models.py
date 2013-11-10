@@ -10,11 +10,13 @@ logger = logging.getLogger(__name__)
 
 
 class HsUserManager(BaseUserManager):
-    def create_user(self, email, cell_phone_number, is_student, password=None, **kwargs):
+
+    def create_user(self, email, cell_phone_number, is_student, full_name, password=None, **kwargs):
         """
         Creates and saves a User with the given email, date of
         birth and password.
         """
+        logger.info("create_user called")
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -51,6 +53,7 @@ class HsUserManager(BaseUserManager):
             full_name=full_name
         )
         user.is_admin = True
+        user.is_staff = True
         user.is_active = False
         
         full_name = kwargs.get("full_name", None)
@@ -67,6 +70,7 @@ def check_if_existing_hackerspace_member(email):
     try:
         ExistingMemberInformation.objects.get(email=email)
         exists =  True
+        logger.info("User with email address %s found" % email)
     except ExistingMemberInformation.DoesNotExist:
         logger.info("User with email address %s could not be found" % email)
         pass
@@ -86,7 +90,7 @@ class HsUser(AbstractBaseUser, PermissionsMixin):
     cell_phone_number = models.CharField('cep numarası', max_length=16)
     cell_phone_number_visible = models.BooleanField('telefon numaramı başkaları görebilsin mi?', default=False)
     is_student = models.BooleanField('öğrenci miyim?', default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     summary = models.TextField('kimim?', blank=True, null=True)
