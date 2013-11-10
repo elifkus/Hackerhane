@@ -9,9 +9,6 @@
 			<a href="{% url 'show-member' member.id %}">{{ member.full_name }}</a>
 		</td>
 		<td>
-			{% if request.user.id == member.id %}
-				<a href="{% url 'edit-current-user' %}">Değiştir</a>
-			{% endif %}
 		</td>
 	</tr>
 {% endfor %}

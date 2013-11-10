@@ -61,6 +61,7 @@ class HsUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 def check_if_existing_hackerspace_member(email):
     exists = False
     
@@ -71,6 +72,7 @@ def check_if_existing_hackerspace_member(email):
         logger.info("User with email address %s could not be found" % email)
         pass
     return exists
+
 
 class HsUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(

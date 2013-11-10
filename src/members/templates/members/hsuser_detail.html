@@ -19,5 +19,14 @@
 <tr><td>{{ link.get_type_display | title }}</td><td>{{ link.link | urlize }}</td></tr>
 {% endfor %}
 </table>
+{% if user.is_authenticated %}
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-3">
+		<div class="pull-right">
+		<a href="{% url 'edit-current-user' %}" class="btn btn-default" role="button">Değiştir</a>
+		</div>
+	</div>
+</div>
+{% endif %}
 {% endblock content %}
     
