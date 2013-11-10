@@ -4,9 +4,6 @@ from members.models import HsUser
 from django.contrib.auth.decorators import login_required
 from members.views import update_own_user
 from members import views
-from django.views.generic.base import TemplateView
-from members.forms import ExampleForm
-
 
 
 urlpatterns = patterns('',
@@ -20,5 +17,4 @@ urlpatterns = patterns('',
     url(r'^degistir/$', login_required(
             update_own_user),
         name='edit-current-user'),
-    url(r'^example/$', TemplateView.as_view(template_name="example.html"), {'form': ExampleForm()}),
 ) 
