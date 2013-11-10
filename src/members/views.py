@@ -46,7 +46,7 @@ def view_user(request, pk):
                                context_instance=RequestContext(request))
     
 
-def update_user(request):
+def update_own_user(request):
     
     if request.method == "POST":
         user_form = HsUserForm(request.POST, prefix='user', instance=request.user)
@@ -71,14 +71,6 @@ def update_user(request):
                                    'link_formset': link_formset},
                                   context_instance=RequestContext(request)
                                  ) 
-        
-
-class OwnUserUpdateView(UpdateView):
-    model = HsUser
-    fields = ['email_visible','cell_phone_number','cell_phone_number_visible','full_name', 
-                    'nickname','is_student', 'summary', 'reason']
-    
-    def get_object(self, queryset=None):
-        return HsUser.objects.get(pk=self.request.user.id)
+       
     
 
