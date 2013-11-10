@@ -18,14 +18,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: templates/account/login.html:14
-#, python-format
-msgid ""
-"Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"{{ signup_url }}\">sign up</a>\n"
-"for a {{ site_name }} account and sign in below:"
-msgstr ""
-"Lütfen sosyal medya/eposta hesaplarınızdan biri ile\n"
-"giriş yapın veya {{ site_name }}'ye <a href=\"{{ signup_url }}\">kayıt olun</a>\n"
-"ve aşağıdaki form ile giriş yapın:"
