@@ -90,7 +90,7 @@ class HsUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    summary = models.TextField('ben kimim ne yaparım?', blank=True, null=True)
+    summary = models.TextField('kimim?', blank=True, null=True)
     reason = models.TextField('hackerspace çünkü', blank=True, null=True)
     
     objects = HsUserManager()
