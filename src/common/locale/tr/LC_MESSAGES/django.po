@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/account/login.html:10
+#: templates/account/login.html:14
 #, python-format
 msgid ""
 "Please sign in with one\n"
@@ -32,6 +32,4 @@ msgstr ""
 "%(site_name)s'ye "
 " <a href=\"%(signup_url)s\">kayıt olun</a> \n"
 "ve aşağıdaki form il giriş yapın:"
-
-
 
