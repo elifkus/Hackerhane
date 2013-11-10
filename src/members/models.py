@@ -19,7 +19,6 @@ class HsUserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         full_name = kwargs.get("full_name", None)
-        is_active = kwargs.get("is_active", False)
         
         user = self.model(
             email=self.normalize_email(email),
@@ -27,7 +26,7 @@ class HsUserManager(BaseUserManager):
             is_student=is_student, full_name=full_name
         )
         
-        user.is_active = is_active or check_if_existing_hackerspace_member(email)
+        user.is_active = check_if_existing_hackerspace_member(email)
                 
         if password:
             user.set_password(password)
