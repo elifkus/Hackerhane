@@ -148,4 +148,5 @@ class ExistingMemberInformation(models.Model):
     member_since_date = models.DateField()
     memberships = models.ManyToManyField(Membership, null=True, blank=True) 
 
-    
+    def __str__(self):
+        return self.email
