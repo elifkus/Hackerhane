@@ -2,14 +2,23 @@
 
 {% block content %}
 
+
 <form action="" method="post" role="form" id="user_form" >
 	{% csrf_token %}
-    {{ user_form.as_p }}
-    
-	{{ link_formset.management_form }}
-    {% for form in link_formset %}
-        {{ form.as_ul }}
-    {% endfor %}
+	<table class="table table-hover">
+	    {{ user_form.as_table }}
+	    <tr>
+	    	<td><label>Linkler:</label></td>
+	    	<td>
+				{{ link_formset.management_form }}
+			    {% for form in link_formset %}
+			    	<ul class="list-inline">
+			        	{{ form.as_ul }}
+			        </ul>
+			    {% endfor %}
+    		</td>
+    	</tr>
+    </table>
     <input type="submit" value="Güncelle"  />
 </form>
 {% endblock content %}

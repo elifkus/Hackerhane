@@ -33,3 +33,5 @@ msgstr ""
 " <a href=\"%(signup_url)s\">kayıt olun</a> \n"
 "ve aşağıdaki form il giriş yapın:"
 
+
+
