@@ -15,7 +15,7 @@ class HsUserManager(BaseUserManager):
         Creates and saves a User with the given email, date of
         birth and password.
         """
-        logger.info("create_user called")
+
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -27,7 +27,8 @@ class HsUserManager(BaseUserManager):
             is_student=is_student, full_name=full_name
         )
         
-        user.is_active = check_if_existing_hackerspace_member(email)
+        existing = retrieve_existing_hackerspace_member(email)
+        user.is_active = existing is not None
                 
         if password:
             user.set_password(password)
@@ -35,6 +36,11 @@ class HsUserManager(BaseUserManager):
             user.set_unusable_password()
 
         user.save(using=self._db)
+        
+        if existing:
+            existing.user =  user
+            existing.save()
+            
         return user
 
 
@@ -63,17 +69,15 @@ class HsUserManager(BaseUserManager):
         return user
 
 
-def check_if_existing_hackerspace_member(email):
-    exists = False
-    
+def retrieve_existing_hackerspace_member(email):
+    existing = None
     try:
-        ExistingMemberInformation.objects.get(email=email)
-        exists =  True
+        existing = ExistingMemberInformation.objects.get(email=email)
         logger.info("User with email address %s found" % email)
     except ExistingMemberInformation.DoesNotExist:
         logger.info("User with email address %s could not be found" % email)
         pass
-    return exists
+    return existing
 
 
 class HsUser(AbstractBaseUser, PermissionsMixin):
@@ -152,3 +156,4 @@ class ExistingMemberInformation(models.Model):
     
     def __str__(self):
         return self.email
+    
