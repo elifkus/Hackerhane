@@ -3,7 +3,6 @@ from hackerhane import settings
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.core.urlresolvers import reverse
-from membership.models import Membership
 import logging
 
 logger = logging.getLogger(__name__)
@@ -149,7 +148,7 @@ class ExistingMemberInformation(models.Model):
     is_student = models.BooleanField('öğrenci miyim?', default=False)
     is_active = models.BooleanField(default=True)
     member_since_date = models.DateField()
-    memberships = models.ManyToManyField(Membership, null=True, blank=True) 
-
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True)
+    
     def __str__(self):
         return self.email
