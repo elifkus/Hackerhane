@@ -152,7 +152,7 @@ class ExistingMemberInformation(models.Model):
     is_student = models.BooleanField('öğrenci miyim?', default=False)
     is_active = models.BooleanField(default=True)
     member_since_date = models.DateField()
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='+', null=True, blank=True)
     
     def __str__(self):
         return self.email
