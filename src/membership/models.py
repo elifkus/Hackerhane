@@ -43,6 +43,9 @@ class FeePayment(BaseModelWithTimestamps):
     
     __approved = None
     
+    def __str__(self):
+        return "%d TL - %s - Approved %s" % (self.amount, str(self.payment_date), str(self.approved))
+    
     def __init__(self, *args, **kwargs):
         super(FeePayment, self).__init__(*args, **kwargs)
         self.__approved = self.approved
